@@ -1,4 +1,3 @@
-local QBCore = exports['qb-core']:GetCoreObject()
 local mugshotInProgress, createdCamera, MugshotArray, playerData = false, 0, {}, nil
 local handle, board, board_scaleform, overlay, ped, pedcoords, x, y, z, r, suspectheading, suspectx, suspecty, suspectz, board_pos
 
@@ -169,11 +168,11 @@ RegisterNetEvent('cqc-mugshot:client:trigger', function()
     ped = PlayerPedId()
     pedcoords = GetEntityCoords(ped)
     CreateThread(function()
-        playerData = QBCore.Functions.GetPlayerData()
+        playerData = ESX.GetPlayerData()
         MugshotArray, mugshotInProgress = {}, true
         local citizenid = playerData.citizenid
         local animDict = 'mp_character_creation@lineup@male_a'
-        QBCore.Functions.RequestAnimDict(animDict)
+        ESX.Streaming.RequestAnimDict(animDict)
         PrepBoard()
         Wait(250)
         MakeBoard()
@@ -199,7 +198,7 @@ RegisterNetEvent('cqc-mugshot:client:trigger', function()
 end)
 
 RegisterNetEvent("cqc-mugshot:client:takemugshot",function()
-    local player, distance = QBCore.Functions.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
+    local player, distance = ESX.Game.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
     if player ~= -1 and distance < 2.0 then
         local playerId = GetPlayerServerId(player)
         TriggerServerEvent('cqc-mugshot:server:triggerSuspect', playerId)
@@ -208,7 +207,7 @@ end)
 
 if Config.TestCommand then
     RegisterCommand("testmugshot", function(source)
-        local player, distance = QBCore.Functions.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
+        local player, distance = ESX.Game.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
         if player ~= -1 and distance < 2.0 then
             local playerId = GetPlayerServerId(player)
             TriggerServerEvent('cqc-mugshot:server:triggerSuspect', playerId)

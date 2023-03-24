@@ -1,5 +1,3 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-
 local MugShots = {}
 
 RegisterNetEvent('cqc-mugshot:server:triggerSuspect', function(suspect)
@@ -14,6 +12,6 @@ RegisterNetEvent('cqc-mugshot:server:MDTupload', function(citizenid, MugShotURLs
 end)
 
 --Allows external resources to pull most recent mugshot urls for a given citizen id
-QBCore.Functions.CreateCallback(function(source, cb, citizenid) 
+ESX.RegisterServerCallback(function(source, cb, citizenid) 
     cb(MugShots[citizenid])
 end)
